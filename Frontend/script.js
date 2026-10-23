@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         outputBox.innerHTML = `<p class="placeholder-text"><i class="ph-bold ph-spinner" style="animation: spin 1s linear infinite;"></i> Procesando en MathAI...</p>`;
 
         try {
-            const response = await fetch('http://localhost:5000/api/resolver', {
+            const response = await fetch('https://mathai-hzgl.onrender.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
