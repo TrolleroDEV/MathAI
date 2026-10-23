@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathAI - Solucionador de Precálculo</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Iconos Phosphor (Opcionales, para mejorar la interfaz) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Agrega esto dentro del <head> de index.html -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="ph-bold ph-function"></i>
+                <h2>Math<span>AI</span></h2>
+            </div>
+
+            <nav class="menu">
+                <p class="menu-label">Módulos</p>
+                <button class="menu-btn active" data-topic="algebra">
+                    <i class="ph-bold ph-textbox"></i> Álgebra y Funciones
+                </button>
+                <button class="menu-btn" data-topic="grafica">
+                    <i class="ph-bold ph-chart-line-up"></i> Representación Gráfica
+                </button>
+                <button class="menu-btn" data-topic="limite">
+                    <i class="ph-bold ph-arrows-in-line-horizontal"></i> Límites
+                </button>
+                <button class="menu-btn" data-topic="derivada">
+                    <i class="ph-bold ph-trend-up"></i> Derivadas
+                </button>
+                <button class="menu-btn" data-topic="integral">
+                    <i class="ph-bold ph-path"></i> Integrales
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>MathAI v1.0 • Proyecto Educativo</p>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <header class="topbar">
+                <h1 id="module-title">Álgebra y Funciones</h1>
+                <p id="module-desc">Suma, simplifica, resuelve ecuaciones y analiza funciones polinómicas o trascendentes.</p>
+            </header>
+
+            <section class="card calculator-card">
+                <label for="math-input" class="input-label">Ingresa la función o ecuación</label>
+                
+                <div class="input-group">
+                    <input type="text" id="math-input" placeholder="Ejemplo: x^2 + 3*x - 5" autocomplete="off">
+                    <button id="solve-btn" class="primary-btn">
+                        <span>Resolver</span>
+                        <i class="ph-bold ph-sparkle"></i>
+                    </button>
+                </div>
+
+                <!-- Botones rápidos de teclado matemático -->
+                <div class="quick-syms">
+                    <button class="sym-btn" data-sym="^">xⁿ</button>
+                    <button class="sym-btn" data-sym="sqrt()">√</button>
+                    <button class="sym-btn" data-sym="sin()">sin</button>
+                    <button class="sym-btn" data-sym="cos()">cos</button>
+                    <button class="sym-btn" data-sym="pi">π</button>
+                    <button class="sym-btn" data-sym="oo">∞</button>
+                </div>
+            </section>
+
+            <!-- Sección de Resultados -->
+            <section class="card result-card">
+                <h3><i class="ph-bold ph-check-circle"></i> Resultado y Solución</h3>
+                <div id="output-box" class="output-box">
+                    <p class="placeholder-text">Los resultados y pasos aparecerán aquí después de procesar la consulta.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
