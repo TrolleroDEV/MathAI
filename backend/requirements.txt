@@ -1,5 +1,6 @@
-flask
+Flask
 flask-cors
 sympy
 numpy
 gunicorn
+google-genai
