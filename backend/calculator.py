@@ -1,12 +1,11 @@
 import os
 from groq import Groq
 
-# Inicializar el cliente de Groq usando la variable de entorno GROQ_API_KEY
 client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
 
-def resolver_matematica_ia(prompt_usuario):
+def resolver_matematica_ia(prompt_usuario):  # <-- Debe llamarse exactamente así
     try:
         completion = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
@@ -25,8 +24,6 @@ def resolver_matematica_ia(prompt_usuario):
         )
         
         respuesta_texto = completion.choices[0].message.content
-        
-        # Convertimos la respuesta de texto en una lista de pasos limpia para el frontend
         pasos = [p.strip() for p in respuesta_texto.split('\n') if p.strip()]
         
         return {
