@@ -29,26 +29,7 @@
         </div>
     </div>
 
-    <script>
-        function enviarPrompt() {
-            const texto = document.getElementById('promptUsuario').value;
-            if (!texto.trim()) return;
-
-            const container = document.getElementById('chatContainer');
-            
-            // Mostrar la pregunta del usuario con el estilo de tarjeta original
-            container.innerHTML += `
-                <div class="resultado-box user-query">
-                    <strong>Tú:</strong>
-                    <p>${texto}</p>
-                </div>
-            `;
-
-            // Limpiar input
-            document.getElementById('promptUsuario').value = '';
-
-            // Próximamente aquí conectaremos la respuesta de la IA y el backend
-        }
-    </script>
+    <!-- Enlace al archivo JavaScript externo -->
+    <script src="script.js"></script>
 </body>
 </html>
