@@ -6,14 +6,14 @@ client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
 
-def resolver_problema_mathai(prompt_usuario):
+def resolver_matematica_ia(prompt_usuario):
     try:
         completion = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
                 {
                     "role": "system",
-                    "content": "Eres MathAI, un asistente experto en matemáticas y cálculo. Responde de forma estructurada, dividiendo la solución en pasos claros dentro de un formato JSON o texto ordenado que el backend pueda procesar."
+                    "content": "Eres MathAI, un asistente experto en matemáticas y cálculo. Responde de forma estructurada, dividiendo la solución en pasos claros."
                 },
                 {
                     "role": "user",
@@ -25,7 +25,19 @@ def resolver_problema_mathai(prompt_usuario):
         )
         
         respuesta_texto = completion.choices[0].message.content
-        return respuesta_texto
+        
+        # Convertimos la respuesta de texto en una lista de pasos limpia para el frontend
+        pasos = [p.strip() for p in respuesta_texto.split('\n') if p.strip()]
+        
+        return {
+            "estatus": "exito",
+            "pasos": pasos,
+            "x_vals": [],
+            "y_vals": []
+        }
         
     except Exception as e:
-        return f"Error al procesar con Groq: {str(e)}"
+        return {
+            "estatus": "error",
+            "mensaje": f"Error al procesar con Groq: {str(e)}"
+        }
