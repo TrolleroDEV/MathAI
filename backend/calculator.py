@@ -55,7 +55,7 @@ def resolver_matematica_ia(prompt_usuario):
         """
 
         response = client.models.generate_content(
-            model='gemini-2.5-flash',
+            model='gemini-3.8-flash',
             contents=f"{prompt_sistema}\n\nConsulta del usuario: {prompt_usuario}"
         )
 
