@@ -1,6 +1,4 @@
-Flask
-flask-cors
-sympy
-numpy
-gunicorn
 groq
+flask
+gunicorn
+requests
