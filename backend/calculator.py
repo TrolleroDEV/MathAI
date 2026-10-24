@@ -8,7 +8,7 @@ client = Groq(
 def resolver_matematica_ia(prompt_usuario):
     try:
         completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="llama-3.1-8b-instant",  # <-- Modelo actualizado y altamente veloz
             messages=[
                 {
                     "role": "system",
@@ -22,17 +22,17 @@ def resolver_matematica_ia(prompt_usuario):
             temperature=0.1,
             max_tokens=1024
         )
-
+        
         respuesta_texto = completion.choices[0].message.content
         pasos = [p.strip() for p in respuesta_texto.split('\n') if p.strip()]
-
+        
         return {
             "estatus": "exito",
             "pasos": pasos,
             "x_vals": [],
             "y_vals": []
         }
-
+        
     except Exception as e:
         return {
             "estatus": "error",
