@@ -43,29 +43,93 @@ async function enviarPrompt() {
         document.getElementById(loadingId).remove();
 
         if (data.estatus === 'exito') {
-            // Mostrar la explicación paso a paso de la IA
+            // Unir los pasos y separarlos de forma limpia por cada número o punto clave
+            let explicacionCompleta = data.pasos.join(' ');
+            let pasosSeparados = explicacionCompleta.split(/(?=\d+\.\s+\*\*)/g);
+            
             let pasosHtml = '';
-            data.pasos.forEach(paso => {
-                pasosHtml += `<p>${paso.replace(/\n/g, '<br>')}</p>`;
-            });
+            if (pasosSeparados.length > 1) {
+                pasosSeparados.forEach(paso => {
+                    if (paso.trim() !== '') {
+                        pasosHtml += `
+                            <div style="background-color: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+                                <p style="margin: 0; color: #c9d1d9; line-height: 1.5;">${paso.trim()}</p>
+                            </div>
+                        `;
+                    }
+                });
+            } else {
+                data.pasos.forEach(paso => {
+                    pasosHtml += `<p style="color: #c9d1d9; line-height: 1.5;">${paso.replace(/\n/g, '<br>')}</p>`;
+                });
+            }
+
+            // ID único para la gráfica con Chart.js
+            const canvasId = 'canvas-' + Date.now();
+            let tieneGrafica = data.x_vals && data.y_vals && data.x_vals.length > 0;
 
             let htmlRespuesta = `
                 <div class="resultado-box">
-                    <h3>Solución de MathAI 🤖✨</h3>
-                    ${pasosHtml}
+                    <h3 style="color: #58a6ff; margin-top: 0;">Solución de MathAI 🤖✨</h3>
+                    <div style="margin-top: 15px;">
+                        ${pasosHtml}
+                    </div>
             `;
 
-            // Si hay datos de gráfica, agregamos un indicador visual
-            if (data.x_vals && data.y_vals) {
+            // Si hay datos de gráfica, agregamos el contenedor del canvas
+            if (tieneGrafica) {
                 htmlRespuesta += `
-                    <div style="margin-top: 15px; padding: 10px; background-color: #0d1117; border-radius: 8px; text-align: center;">
-                        <p style="color: #8b949e; font-size: 14px;">📊 Gráfica matemática generada con éxito</p>
+                    <div style="margin-top: 20px; padding: 15px; background-color: #0d1117; border: 1px solid #30363d; border-radius: 8px;">
+                        <p style="color: #8b949e; font-size: 14px; margin-bottom: 10px; text-align: center;">📊 Gráfica matemática generada con éxito</p>
+                        <div style="position: relative; height: 260px; width: 100%;">
+                            <canvas id="${canvasId}"></canvas>
+                        </div>
                     </div>
                 `;
             }
 
             htmlRespuesta += `</div>`;
             container.innerHTML += htmlRespuesta;
+
+            // Renderizar la gráfica usando Chart.js
+            if (tieneGrafica) {
+                setTimeout(() => {
+                    const ctx = document.getElementById(canvasId).getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.x_vals.map(v => v.toFixed(1)),
+                            datasets: [{
+                                label: 'f(x)',
+                                data: data.y_vals,
+                                borderColor: '#58a6ff',
+                                backgroundColor: 'rgba(88, 166, 255, 0.15)',
+                                borderWidth: 2,
+                                pointRadius: 0,
+                                tension: 0.2,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    grid: { color: '#30363d' },
+                                    ticks: { color: '#8b949e' }
+                                },
+                                y: {
+                                    grid: { color: '#30363d' },
+                                    ticks: { color: '#8b949e' }
+                                }
+                            },
+                            plugins: {
+                                legend: { display: false }
+                            }
+                        }
+                    });
+                }, 100);
+            }
 
         } else {
             container.innerHTML += `
