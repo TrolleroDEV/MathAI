@@ -43,20 +43,22 @@ async function enviarPrompt() {
         document.getElementById(loadingId).remove();
 
         if (data.estatus === 'exito') {
-            // Unir los pasos y separarlos limpiamente por "Paso", números o incisos a), b), c)
-            let explicacionCompleta = data.pasos.join(' ');
-            let pasosSeparados = explicacionCompleta.split(/(?=Paso\s+\d+:|\b[a-z]\)\s+|\d+\.\s+)/gi);
-            
             let pasosHtml = '';
-            pasosSeparados.forEach(paso => {
-                if (paso.trim() !== '') {
-                    pasosHtml += `
-                        <div style="background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px; margin-bottom: 12px;">
-                            <p style="margin: 0; color: #c9d1d9; line-height: 1.6; white-space: pre-line;">${paso.trim()}</p>
-                        </div>
-                    `;
-                }
-            });
+            
+            // Usamos directamente la lista de pasos del backend sin cortarla con expresiones regulares
+            if (Array.isArray(data.pasos) && data.pasos.length > 0) {
+                data.pasos.forEach(paso => {
+                    if (paso && paso.trim() !== '') {
+                        pasosHtml += `
+                            <div style="background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px; margin-bottom: 12px;">
+                                <p style="margin: 0; color: #c9d1d9; line-height: 1.6; white-space: pre-line;">${paso.trim()}</p>
+                            </div>
+                        `;
+                    }
+                });
+            } else {
+                pasosHtml = `<p style="color: #c9d1d9; line-height: 1.6;">No hay pasos disponibles.</p>`;
+            }
 
             // ID único para la gráfica con Chart.js
             const canvasId = 'canvas-' + Date.now();
