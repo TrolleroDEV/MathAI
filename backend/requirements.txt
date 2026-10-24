@@ -1,4 +1,5 @@
-groq
 flask
+flask-cors
+groq
 gunicorn
 requests
