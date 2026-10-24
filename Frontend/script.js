@@ -1,4 +1,7 @@
 async function enviarPrompt() {
+    const header = document.getElementById('welcomeHeader');
+    if (header) header.style.display = 'none';
+
     const textarea = document.getElementById('promptUsuario');
     const texto = textarea.value;
     if (!texto.trim()) return;
@@ -147,4 +150,17 @@ async function enviarPrompt() {
     }
 
     container.scrollTop = container.scrollHeight;
+}
+
+// Función para usar los ejemplos con un clic
+function usarEjemplo(texto) {
+    document.getElementById('promptUsuario').value = texto;
+    enviarPrompt();
+}
+
+// Función para limpiar la pantalla si el usuario quiere reiniciar
+function limpiarPantalla() {
+    document.getElementById('chatContainer').innerHTML = '';
+    const header = document.getElementById('welcomeHeader');
+    if (header) header.style.display = 'block';
 }

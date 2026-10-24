@@ -5,32 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MathAI - Asistente Matemático</title>
     <link rel="stylesheet" href="style.css">
-    <!-- ¡Esta línea es indispensable para las gráficas! -->
+    <!-- Librería de íconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js para gráficas -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <header>
-        <h1>MathAI 🤖</h1>
-        <p>Tu asistente inteligente para resolucion de problemas Matemáticos.</p>
-    </header>
+    <!-- Haz de luz de fondo (Glow Effect) -->
+    <div class="light-glow"></div>
 
+    <div class="app-container">
+        <!-- Encabezado Principal -->
+        <header class="main-header" id="welcomeHeader">
+            <div class="logo-glow">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <p class="subtitle">Bienvenido a MathAI</p>
+            <h1 class="main-title">¿En qué te puedo ayudar hoy?</h1>
 
-    <div class="chat-container" id="chatContainer">
-        <div class="resultado-box">
-            <h3>¡Bienvenido a MathAI!</h3>
-            <p>Escribe abajo cualquier problema o consulta matemática en lenguaje natural. La IA te explicará paso a paso y generará su gráfica.</p>
-        </div>
+            <!-- Tarjetas de sugerencias rápidas -->
+            <div class="suggestions-grid">
+                <div class="suggestion-card" onclick="usarEjemplo('Graficar y = x^2 - 4')">
+                    <p>Graficar la parábola y = x² - 4 y hallar sus raíces</p>
+                    <i class="fa-solid fa-chart-line card-icon"></i>
+                </div>
+                <div class="suggestion-card" onclick="usarEjemplo('Explicar la derivada de f(x) = x^3 - 6x^2 + 9x + 1')">
+                    <p>Explicar la derivada de x³ - 6x² + 9x + 1 paso a paso</p>
+                    <i class="fa-solid fa-square-root-variable card-icon"></i>
+                </div>
+                <div class="suggestion-card" onclick="usarEjemplo('Resolver f(x) = 2x + 1 y graficar')">
+                    <p>Calcular la función lineal f(x) = 2x + 1</p>
+                    <i class="fa-solid fa-calculator card-icon"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Área del Chat / Resultados -->
+        <main class="chat-container" id="chatContainer"></main>
+
+        <!-- Barra de Entrada Flotante Estilo Glowing Bar -->
+        <footer class="input-bar-container">
+            <div class="glowing-input-box">
+                <div class="input-top">
+                    <i class="fa-solid fa-wand-magic-sparkles input-wand"></i>
+                    <textarea id="promptUsuario" placeholder="Escribe cualquier consulta o problema matemático..." rows="1"></textarea>
+                </div>
+                <div class="input-bottom">
+                    <div class="tools-left">
+                        <button type="button" title="Limpiar pantalla" onclick="limpiarPantalla()"><i class="fa-solid fa-trash-can"></i></button>
+                        <button type="button" title="Graficar de ejemplo" onclick="usarEjemplo('Graficar y = x^3')"><i class="fa-solid fa-chart-simple"></i></button>
+                    </div>
+                    <div class="tools-right">
+                        <span class="model-badge"><i class="fa-solid fa-bolt"></i> Gemini AI</span>
+                        <button class="send-btn" id="btnEnviar" onclick="enviarPrompt()">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-
-
-    <div class="input-container">
-        <div class="input-wrapper">
-            <textarea id="promptUsuario" placeholder="Ej: Explícame la derivada de x³ - 6x² + 9x + 1..." rows="1"></textarea>
-            <button onclick="enviarPrompt()">Enviar...</button>
-        </div>
-    </div>
-
 
     <script src="script.js"></script>
 </body>
