@@ -27,7 +27,7 @@ async function enviarPrompt() {
 
     try {
         // 3. Conectar con tu backend en Render
-        const URL_BACKEND = 'https://mathai-hzgl.onrender.com/api/resolver'; // O 'http://localhost:5000/api/resolver' para pruebas locales
+        const URL_BACKEND = 'https://mathai-hzgl.onrender.com/api/resolver';
 
         const response = await fetch(URL_BACKEND, {
             method: 'POST',
@@ -43,26 +43,20 @@ async function enviarPrompt() {
         document.getElementById(loadingId).remove();
 
         if (data.estatus === 'exito') {
-            // Unir los pasos y separarlos de forma limpia por cada número o punto clave
+            // Unir los pasos y separarlos limpiamente por "Paso", números o incisos a), b), c)
             let explicacionCompleta = data.pasos.join(' ');
-            let pasosSeparados = explicacionCompleta.split(/(?=\d+\.\s+\*\*)/g);
+            let pasosSeparados = explicacionCompleta.split(/(?=Paso\s+\d+:|\b[a-z]\)\s+|\d+\.\s+)/gi);
             
             let pasosHtml = '';
-            if (pasosSeparados.length > 1) {
-                pasosSeparados.forEach(paso => {
-                    if (paso.trim() !== '') {
-                        pasosHtml += `
-                            <div style="background-color: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-                                <p style="margin: 0; color: #c9d1d9; line-height: 1.5;">${paso.trim()}</p>
-                            </div>
-                        `;
-                    }
-                });
-            } else {
-                data.pasos.forEach(paso => {
-                    pasosHtml += `<p style="color: #c9d1d9; line-height: 1.5;">${paso.replace(/\n/g, '<br>')}</p>`;
-                });
-            }
+            pasosSeparados.forEach(paso => {
+                if (paso.trim() !== '') {
+                    pasosHtml += `
+                        <div style="background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px; margin-bottom: 12px;">
+                            <p style="margin: 0; color: #c9d1d9; line-height: 1.6; white-space: pre-line;">${paso.trim()}</p>
+                        </div>
+                    `;
+                }
+            });
 
             // ID único para la gráfica con Chart.js
             const canvasId = 'canvas-' + Date.now();
