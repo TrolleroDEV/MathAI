@@ -20,7 +20,7 @@ async function enviarPrompt() {
     container.innerHTML += `
         <div class="resultado-box" id="${loadingId}">
             <strong>MathAI 🤖:</strong>
-            <p>Pensando la solución y preparando la gráfica...</p>
+            <p>Procesando tu petición...</p>
         </div>
     `;
     container.scrollTop = container.scrollHeight;
